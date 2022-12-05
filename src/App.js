@@ -1,26 +1,123 @@
-
+import { Component } from 'react';
+import Clarifai from 'clarifai';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import Logo from './components/Logo/Logo';
 import ImageForm from './components/ImageForm/ImageForm';
 import Rank from './components/Rank/Rank';
-import { Component } from 'react';
 import ParticlesBg from 'particles-bg';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 
+window.process = {}
+
+// const app = new Clarifai.App({
+//   apiKey: '083f50d3cb024a0a90901af8bb7d515b'
+//  });
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input : '',
+      imageUrl: '',
+      box : ''
+    }
+  }
+  
+  calculateFaceBox = (data) => {
+    const faceBoxData = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('imageData');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    
+
+    return {
+      left : faceBoxData.left_col * width,
+      top: faceBoxData.top_row * height,
+      right: width - (faceBoxData.right_col * width) ,
+      bottom: height - (faceBoxData.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    this.setState({box: box})    
+  }
+
+  onInputChange = (event) => {
+    this.setState({input: event.target.value});
+  }
+
+  onButtonSubmit = (event) => {
+    // event.preventDefault();
+    this.setState({imageUrl: this.state.input});
+    this.setState({box: ''});
+    
+    // // //This is the new API from the website
+
+    const raw = JSON.stringify({
+      "user_app_id": {
+        "user_id": "clarifai",
+        "app_id": "main"
+      },
+      "inputs": [
+          {
+              "data": {
+                  "image": {
+                      "url": this.state.input
+                  }
+              }
+          }
+      ]
+    });
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Key ' + 'b928ec9e95df4ca78e8b700704dcf543'
+        },
+        body: raw
+    };
+    
+    // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
+    // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
+    // this will default to the latest version_id
+    
+    fetch(`https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs`, requestOptions)
+        .then(response => response.json())
+        .then(result => this.displayFaceBox(this.calculateFaceBox(result)))
+        .catch(error => console.log('error', error));
+      
+
+    //This is from the course 
+
+    // app.models.predict('53e1df302c079b3db8a0a36033ed2d15',this.state.input).then(
+    //   function(response) {
+    //     console.log(response);
+    //     // console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+    //   },
+    //   function (err) {
+    //     console.log('Error',err)
+    //   }
+    // );
+  }
+
+  
   render() {
     return (
       <div className="App">
         <Nav />
         <Logo />
         <Rank />
-        <ImageForm />
+        <ImageForm onInputChange= {this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
         <ParticlesBg  type='cobweb' bg={true}/>
-        {/*<FaceRecognition /> */}
+        <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
       </div>
     );
   }
 }
 
 export default App;
+
+//dependencies:      "@svgr/webpack": "^6.5.1",   "overrides": {
+  //  "@svgr/webpack": "$@svgr/webpack"
