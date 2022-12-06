@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  /* margin: 0; */
   font-family:'Orbitron', Courier, monospace ;
   background: rgb(238,174,202);
   background: linear-gradient(90deg, rgba(238,174,202,1) 9%, rgba(148,155,233,0.9668242296918768) 92%);
@@ -9,6 +9,7 @@ body {
 .center {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 

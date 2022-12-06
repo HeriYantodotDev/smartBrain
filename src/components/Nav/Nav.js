@@ -1,10 +1,14 @@
 import React from "react";
+import './Nav.css'
 
-const Nav = () => {
+const Nav = ({onChangeRoute, resetImageUrl}) => {
     return (
         <ul className="nav justify-content-end">
             <li className="nav-item">
-                <a className="nav-link active link-warning fs-2" aria-current="page" href="https://google.con">Sign Out</a>
+                <p onClick={()=> {
+                    onChangeRoute('signin');
+                    resetImageUrl();
+                }} className="pointer nav-link active link-warning fs-2" aria-current="page" >Sign Out</p>
             </li>
 
       </ul>
