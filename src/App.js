@@ -7,6 +7,7 @@ import ImageForm from './components/ImageForm/ImageForm';
 import Rank from './components/Rank/Rank';
 import ParticlesBg from 'particles-bg';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import SignIn from './components/SignIn/SignIn';
 
 window.process = {}
 
@@ -20,8 +21,17 @@ class App extends Component {
     this.state = {
       input : '',
       imageUrl: '',
-      box : ''
+      box : '',
+      route : 'signin'
     }
+  }
+
+  resetImageUrl = () => {
+    this.setState({imageUrl : ''});
+  }
+
+  onChangeRoute = (route) => {
+    this.setState({route : route})
   }
   
   calculateFaceBox = (data) => {
@@ -51,7 +61,7 @@ class App extends Component {
     // event.preventDefault();
     this.setState({imageUrl: this.state.input});
     this.setState({box: ''});
-    
+
     // // //This is the new API from the website
 
     const raw = JSON.stringify({
@@ -105,13 +115,19 @@ class App extends Component {
   
   render() {
     return (
-      <div className="App">
-        <Nav />
-        <Logo />
-        <Rank />
-        <ImageForm onInputChange= {this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
-        <ParticlesBg  type='cobweb' bg={true}/>
-        <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
+      <div className=''>
+          <ParticlesBg type='cobweb' bg={true}/>
+        {this.state.route === 'signin' ? 
+          <SignIn onChangeRoute={this.onChangeRoute} /> :
+          <div>
+            <Nav onChangeRoute={this.onChangeRoute} resetImageUrl={this.resetImageUrl} />
+            <Logo />
+            <Rank />
+            <ImageForm onInputChange= {this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
+            <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
+          </div>
+        }
+
       </div>
     );
   }
