@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Clarifai from 'clarifai';
+// import Clarifai from 'clarifai';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import Logo from './components/Logo/Logo';
@@ -8,6 +8,7 @@ import Rank from './components/Rank/Rank';
 import ParticlesBg from 'particles-bg';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
 
 window.process = {}
 
@@ -22,7 +23,8 @@ class App extends Component {
       input : '',
       imageUrl: '',
       box : '',
-      route : 'signin'
+      route : 'signin',
+      isSignIn : false
     }
   }
 
@@ -31,6 +33,11 @@ class App extends Component {
   }
 
   onChangeRoute = (route) => {
+    if (route === 'home') {
+      this.setState({isSignIn: true})
+    } else {
+      this.setState({isSignIn : false})
+    }
     this.setState({route : route})
   }
   
@@ -84,7 +91,7 @@ class App extends Component {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Key ' + 'b928ec9e95df4ca78e8b700704dcf543'
+            'Authorization': `Key b928ec9e95df4ca78e8b700704dcf543`
         },
         body: raw
     };
@@ -114,18 +121,22 @@ class App extends Component {
 
   
   render() {
+    const {imageUrl, box,  route, isSignIn} = this.state
     return (
       <div className=''>
           <ParticlesBg type='cobweb' bg={true}/>
-        {this.state.route === 'signin' ? 
-          <SignIn onChangeRoute={this.onChangeRoute} /> :
+          <Nav onChangeRoute={this.onChangeRoute} resetImageUrl={this.resetImageUrl} isSignIn={isSignIn} />
+        {route === 'home' ? 
           <div>
-            <Nav onChangeRoute={this.onChangeRoute} resetImageUrl={this.resetImageUrl} />
             <Logo />
             <Rank />
             <ImageForm onInputChange= {this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
-            <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
-          </div>
+            <FaceRecognition imageUrl={imageUrl} box={box}/>
+          </div> :
+          (route === 'signin'?
+            <SignIn onChangeRoute={this.onChangeRoute} /> :
+            <Register onChangeRoute={this.onChangeRoute} />
+        )
         }
 
       </div>
