@@ -12,6 +12,8 @@ import Register from './components/Register/Register';
 
 window.process = {}
 
+
+
 // const app = new Clarifai.App({
 //   apiKey: '083f50d3cb024a0a90901af8bb7d515b'
 //  });
@@ -27,6 +29,12 @@ class App extends Component {
       isSignIn : false
     }
   }
+
+  // componentDidMount() {
+  //   fetch('http://localhost:3000')
+  //   .then(response => response.json())
+  //   .then(data => console.log(data))
+  // }
 
   resetImageUrl = () => {
     this.setState({imageUrl : ''});
