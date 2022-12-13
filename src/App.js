@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component} from 'react';
 // import Clarifai from 'clarifai';
 import './App.css';
 import Nav from './components/Nav/Nav';
@@ -26,7 +26,14 @@ class App extends Component {
       imageUrl: '',
       box : '',
       route : 'signin',
-      isSignIn : false
+      isSignIn : false,
+      user : {
+        id : '',
+        name : '',
+        email : '',
+        entries : 0,
+        joined : ''
+      }
     }
   }
 
@@ -35,6 +42,16 @@ class App extends Component {
   //   .then(response => response.json())
   //   .then(data => console.log(data))
   // }
+
+  loadUser = (user) => {
+    this.setState({ user : {
+      id : user.id,
+      name : user.name,
+      email : user.email,
+      entries : user.entries,
+      joined : user.entries 
+    }});
+}
 
   resetImageUrl = () => {
     this.setState({imageUrl : ''});
@@ -137,13 +154,13 @@ class App extends Component {
         {route === 'home' ? 
           <div>
             <Logo />
-            <Rank />
+            <Rank name={this.state.user.name} entries={this.state.user.entries} />
             <ImageForm onInputChange= {this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
             <FaceRecognition imageUrl={imageUrl} box={box}/>
           </div> :
           (route === 'signin'?
-            <SignIn onChangeRoute={this.onChangeRoute} /> :
-            <Register onChangeRoute={this.onChangeRoute} />
+            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} /> :
+            <Register onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} />
         )
         }
 
