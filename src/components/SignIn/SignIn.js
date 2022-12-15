@@ -36,7 +36,7 @@ class SignIn extends React.Component {
                     this.props.onChangeRoute('home')
                     this.setState({signInEmail : "", signInPassword: ""})
                 } else {
-                    alert('Email or PassWord Wrong - Try again');
+                    alert(data.errorMessage);
                         this.setState({signInEmail : "", signInPassword: ""})
                         event.target.parentElement[0].value = "";
                         event.target.parentElement[1].value = "";
