@@ -35,8 +35,8 @@ class Register extends React.Component {
         })
             .then(response => response.json())
             .then(user => {
-                if (user === 'Failed to register') {
-                    alert(`This email :[${this.state.registerEmail}] has already been registed`);
+                if (user.errorCode) {
+                    alert(user.errorMessage);
                     this.setState({registerName : "", registerEmail: "", registerPass : ""})
                     event.target.parentElement[0].value = "";
                     event.target.parentElement[1].value = "";
