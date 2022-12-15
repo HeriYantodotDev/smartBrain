@@ -35,7 +35,14 @@ class Register extends React.Component {
         })
             .then(response => response.json())
             .then(user => {
-                if (user) {
+                if (user === 'Failed to register') {
+                    alert(`This email :[${this.state.registerEmail}] has already been registed`);
+                    this.setState({registerName : "", registerEmail: "", registerPass : ""})
+                    event.target.parentElement[0].value = "";
+                    event.target.parentElement[1].value = "";
+                    event.target.parentElement[2].value = "";
+                } else {
+                    alert('The registration is success')
                     this.props.loadUser(user);
                     this.props.onChangeRoute('home')
                 }

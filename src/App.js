@@ -49,7 +49,7 @@ class App extends Component {
       name : user.name,
       email : user.email,
       entries : user.entries,
-      joined : user.entries 
+      joined : user.joined 
     }});
 }
 
