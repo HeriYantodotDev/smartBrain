@@ -12,6 +12,20 @@ import Register from './components/Register/Register';
 
 window.process = {}
 
+const initialState = {
+  input : '',
+  imageUrl: '',
+  box : {},
+  route : 'signin',
+  isSignIn : false,
+  user : {
+    id : '',
+    name : '',
+    email : '',
+    entries : 0,
+    joined : ''
+  }
+}
 
 
 // const app = new Clarifai.App({
@@ -24,7 +38,7 @@ class App extends Component {
     this.state = {
       input : '',
       imageUrl: '',
-      box : '',
+      box : {},
       route : 'signin',
       isSignIn : false,
       user : {
@@ -55,15 +69,19 @@ class App extends Component {
 
   resetImageUrl = () => {
     this.setState({imageUrl : ''});
+    this.setState({box:''});
   }
 
   onChangeRoute = (route) => {
     if (route === 'home') {
       this.setState({isSignIn: true})
+      this.setState({route : route})
+    } else if (route === 'signin') {
+      this.setState(initialState);
     } else {
-      this.setState({isSignIn : false})
+      this.setState({route : route})
     }
-    this.setState({route : route})
+
   }
   
   calculateFaceBox = (data) => {
