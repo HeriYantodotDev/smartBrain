@@ -112,40 +112,24 @@ class App extends Component {
     this.setState({imageUrl: this.state.input});
     this.setState({box: ''});
 
-    // // //This is the new API from the website
 
-    const raw = JSON.stringify({
-      "user_app_id": {
-        "user_id": "clarifai",
-        "app_id": "main"
-      },
-      "inputs": [
-          {
-              "data": {
-                  "image": {
-                      "url": this.state.input
-                  }
-              }
-          }
-      ]
-    });
-    
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': `Key b928ec9e95df4ca78e8b700704dcf543`
-        },
-        body: raw
-    };
-    
-    // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
-    // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
-    // this will default to the latest version_id
-    
-    fetch(`https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs`, requestOptions)
+    fetch('http://localhost:3000/facereg', {
+              method : 'post',
+              headers : {'Content-Type' : 'application/json'},
+              body : JSON.stringify({
+                  input : this.state.input
+              })
+            })
         .then(response => response.json())
         .then(result => {
+          if (result.status.code === 10020) {
+            alert('Image URL isn\'t value! Try a valid link');
+            
+            event.target.parentElement.parentElement[0].value='';
+            this.setState({input: '', imageUrl: ''})
+            return;
+          }
+
           if (result) {
             fetch('http://localhost:3000/image', {
               method : 'put',
@@ -159,7 +143,7 @@ class App extends Component {
           }
           this.displayFaceBox(this.calculateFaceBox(result)) 
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.log('[smart brain]error message:', error));
       
 
     //This is from the course 
