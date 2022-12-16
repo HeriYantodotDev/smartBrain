@@ -46,6 +46,7 @@ class Register extends React.Component {
                     this.props.onChangeRoute('home')
                 }
             })
+            .catch(err => alert('Sorry 🙏🏻! The server is down'))
     }
 
 

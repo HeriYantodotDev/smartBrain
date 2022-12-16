@@ -42,6 +42,7 @@ class SignIn extends React.Component {
                         event.target.parentElement[1].value = "";
                 }
             })
+            .catch(err => alert('Sorry 🙏🏻! The server is down'))
         
     }
 
