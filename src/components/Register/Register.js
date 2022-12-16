@@ -8,7 +8,6 @@ class Register extends React.Component {
             registerEmail : '',
             registerPass : ''
         }
-        
     }
 
     onNameChange = (event) => {
