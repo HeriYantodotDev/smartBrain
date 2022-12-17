@@ -24,7 +24,7 @@ const initialState = {
   }
 }
 
-const backEnd = "https://little-forest-2971.fly.dev/";
+const backEnd = "https://little-forest-2971.fly.dev";
 
 class App extends Component {
   constructor() {
