@@ -24,6 +24,8 @@ const initialState = {
   }
 }
 
+const backEnd = "https://little-forest-2971.fly.dev/";
+
 class App extends Component {
   constructor() {
     super();
@@ -99,7 +101,7 @@ class App extends Component {
     this.setState({box: ''});
 
 
-    fetch('http://localhost:3000/facereg', {
+    fetch(`${backEnd}/facereg`, {
               method : 'post',
               headers : {'Content-Type' : 'application/json'},
               body : JSON.stringify({
@@ -117,7 +119,7 @@ class App extends Component {
           }
 
           if (result) {
-            fetch('http://localhost:3000/image', {
+            fetch(`${backEnd}/image`, {
               method : 'put',
               headers : {'Content-Type' : 'application/json'},
               body : JSON.stringify({
@@ -160,8 +162,8 @@ class App extends Component {
             <FaceRecognition imageUrl={imageUrl} box={box}/>
           </div> :
           (route === 'signin'?
-            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} /> :
-            <Register onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} />
+            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} /> :
+            <Register onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} />
         )
         }
 
