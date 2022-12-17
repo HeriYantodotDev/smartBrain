@@ -159,7 +159,7 @@ class App extends Component {
     const {imageUrl, box,  route, isSignIn} = this.state
     return (
       <div className=''>
-          <ParticlesBg type='cobweb' bg={true}/>
+          <ParticlesBg type='circle' bg={true}/>
           <Nav onChangeRoute={this.onChangeRoute} resetImageUrl={this.resetImageUrl} isSignIn={isSignIn} />
         {route === 'home' ? 
           <div>
@@ -169,7 +169,7 @@ class App extends Component {
             <FaceRecognition imageUrl={imageUrl} box={box}/>
           </div> :
           (route === 'signin'?
-            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} /> :
+            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} />:
             <Register onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} />
         )
         }
