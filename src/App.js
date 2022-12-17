@@ -10,8 +10,6 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 
-window.process = {}
-
 const initialState = {
   input : '',
   imageUrl: '',
