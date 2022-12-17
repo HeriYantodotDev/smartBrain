@@ -24,6 +24,8 @@ const initialState = {
   }
 }
 
+const backEnd = "https://spring-firefly-6976.fly.dev";
+
 class App extends Component {
   constructor() {
     super();
@@ -99,7 +101,7 @@ class App extends Component {
     this.setState({box: ''});
 
 
-    fetch('http://localhost:3000/facereg', {
+    fetch(`${backEnd}/facereg`, {
               method : 'post',
               headers : {'Content-Type' : 'application/json'},
               body : JSON.stringify({
@@ -108,16 +110,23 @@ class App extends Component {
             })
         .then(response => response.json())
         .then(result => {
-          if (result.status.code === 10020) {
-            alert('Image URL isn\'t value! Try a valid link');
+          // if (result.status.code === 10020) {
+          //   alert('Image URL isn\'t valid! Try a valid link');
             
-            event.target.parentElement.parentElement[0].value='';
-            this.setState({input: '', imageUrl: ''})
-            return;
+          //   event.target.parentElement.parentElement[0].value='';
+          //   this.setState({input: '', imageUrl: ''})
+          //   return;
+          // }
+
+          if (result.errorCode) {
+             alert(`Sorry 🙏🏻: ${result.errorMessage}`)
+             event.target.parentElement.parentElement[0].value='';
+             this.setState({input: '', imageUrl: ''})
+             return;             
           }
 
           if (result) {
-            fetch('http://localhost:3000/image', {
+            fetch(`${backEnd}/image`, {
               method : 'put',
               headers : {'Content-Type' : 'application/json'},
               body : JSON.stringify({
@@ -160,8 +169,8 @@ class App extends Component {
             <FaceRecognition imageUrl={imageUrl} box={box}/>
           </div> :
           (route === 'signin'?
-            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} /> :
-            <Register onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} />
+            <SignIn onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} /> :
+            <Register onChangeRoute={this.onChangeRoute} loadUser={this.loadUser} backEnd={backEnd} />
         )
         }
 
