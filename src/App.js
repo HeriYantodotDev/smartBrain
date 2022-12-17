@@ -111,11 +111,18 @@ class App extends Component {
         .then(response => response.json())
         .then(result => {
           if (result.status.code === 10020) {
-            alert('Image URL isn\'t value! Try a valid link');
+            alert('Image URL isn\'t valid! Try a valid link');
             
             event.target.parentElement.parentElement[0].value='';
             this.setState({input: '', imageUrl: ''})
             return;
+          }
+
+          if (result.errorCode) {
+             alert(`Sorry 🙏🏻: ${result.errorMessage}`)
+             event.target.parentElement.parentElement[0].value='';
+             this.setState({input: '', imageUrl: ''})
+             return;             
           }
 
           if (result) {
