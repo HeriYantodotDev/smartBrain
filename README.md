@@ -1,2 +1,2 @@
-# Working in Progress
-And here's the source code for the [API](https://github.com/HeriYantodotDev/smartbrain-api)
+# A simple Face Recognition App using Clarifai API
+I'll post the sourcecode for the backend later(There's confidential information there - I'll find out more secure way to make it public)
