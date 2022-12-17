@@ -1,5 +1,4 @@
 import { Component} from 'react';
-// import Clarifai from 'clarifai';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import Logo from './components/Logo/Logo';
@@ -25,11 +24,6 @@ const initialState = {
   }
 }
 
-
-// const app = new Clarifai.App({
-//   apiKey: '083f50d3cb024a0a90901af8bb7d515b'
-//  });
-
 class App extends Component {
   constructor() {
     super();
@@ -48,12 +42,6 @@ class App extends Component {
       }
     }
   }
-
-  // componentDidMount() {
-  //   fetch('http://localhost:3000')
-  //   .then(response => response.json())
-  //   .then(data => console.log(data))
-  // }
 
   loadUser = (user) => {
     this.setState({ user : {
