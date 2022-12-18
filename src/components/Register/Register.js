@@ -37,9 +37,9 @@ class Register extends React.Component {
                 if (user.errorCode) {
                     alert(user.errorMessage);
                     this.setState({registerName : "", registerEmail: "", registerPass : ""})
-                    event.target.parentElement[0].value = "";
-                    event.target.parentElement[1].value = "";
-                    event.target.parentElement[2].value = "";
+                    event.target.parentElement.children[0].children[1].value = ''
+                    event.target.parentElement.children[1].children[1].value = ''
+                    event.target.parentElement.children[2].children[1].value = ''
                 } else {
                     alert('The registration is success')
                     this.props.loadUser(user);

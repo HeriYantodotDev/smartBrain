@@ -30,19 +30,22 @@ class SignIn extends React.Component {
             })
         })
             .then(response => response.json())
-            .then(data => {
-                if (data.id) {
+            .then(data => {    
+                if (data.hasOwnProperty('id') ) {
                     this.props.loadUser(data)
                     this.props.onChangeRoute('home')
                     this.setState({signInEmail : "", signInPassword: ""})
                 } else {
                     alert(data.errorMessage);
                         this.setState({signInEmail : "", signInPassword: ""})
-                        event.target.parentElement[0].value = "";
-                        event.target.parentElement[1].value = "";
+                        event.target.parentElement.children[0].children[1].value = ''
+                        event.target.parentElement.children[1].children[1].value = ''
+                    return
                 }
             })
-            .catch(err => alert('Sorry 🙏🏻! The server is down'))
+            .catch(err => {
+                alert('Sorry 🙏🏻! The server is down')
+            })
         
     }
 
