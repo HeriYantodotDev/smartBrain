@@ -3,6 +3,7 @@ import './FaceRecognition.css';
 
 const FaceRecognition = ({imageUrl, box}) => {
     return (
+        
         <div className="d-flex justify-content-center">
             <div className="position-absolute">
                 <img id="imageData" className="size" alt="" src={imageUrl}></img>
