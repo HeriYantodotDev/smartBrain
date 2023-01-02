@@ -9,3 +9,7 @@
 .oke {
   width: 600px;
 }
+
+.particles-bg-canvas-self {
+  position:fixed !important;
+}
